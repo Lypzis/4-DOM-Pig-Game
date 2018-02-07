@@ -21,7 +21,8 @@ GAME RULES:
 
 var scores,
     roundScore,
-    activePlayer;
+    activePlayer,
+    diceDOM;
 
 scores = [0, 0];
 roundScore = 0;
@@ -32,14 +33,14 @@ document.getElementById('score-1').textContent = scores[1];
 document.getElementById('current-0').textContent = 0;
 document.getElementById('current-1').textContent = 0;
 
-document.querySelector('.dice').style.display = 'none';
+diceDOM = document.querySelector('.dice');
+diceDOM.style.display = 'none';
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
     //1. Random Number;
     var dice = Math.floor((Math.random() * 6)+1);
 
     //2. Display the result
-    var diceDOM = document.querySelector('.dice');
     diceDOM.style.display = 'block';
     diceDOM.src = 'dice-' + dice + '.png';
 
@@ -50,23 +51,29 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         roundScore += dice;
         currentPlayerScore.textContent = roundScore;
     } else {
-        roundScore = 0;
-        currentPlayerScore.textContent = roundScore;
-        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-    
-        //next player
-        document.querySelector('.player-0-panel').classList.toggle('active');
-        document.querySelector('.player-1-panel').classList.toggle('active');  
-
-        diceDOM.style.display = 'none';
+        endTurn(currentPlayerScore);
     }
 });
 
 document.querySelector('.btn-hold').addEventListener('click', function(){
-    //1. get the current player score
+    //1. get the current player score and add to global score
+    scores[activePlayer] += roundScore;
 
     //2. add current score to the active player score
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
-    //3. next player
+    //3. check if player won the game else it is next player 
+    endTurn(currentPlayerScore);
 });
 
+function endTurn(currentPlayerScore){
+    roundScore = 0;
+    currentPlayerScore.textContent = roundScore;
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+
+    //next player
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');  
+
+    diceDOM.style.display = 'none';
+}
