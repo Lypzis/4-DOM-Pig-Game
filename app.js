@@ -22,7 +22,8 @@ GAME RULES:
 var scores,
     roundScore,
     activePlayer,
-    diceDOM;
+    diceDOM,
+    currentPlayerScore;
 
 scores = [0, 0];
 roundScore = 0;
@@ -45,13 +46,13 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
     diceDOM.src = 'dice-' + dice + '.png';
 
     //3. Update the round score IF the rolled number was not 1
-    var currentPlayerScore = document.querySelector('#current-' + activePlayer);
+    currentPlayerScore = document.querySelector('#current-' + activePlayer);
     if (dice !== 1){
         //add score
         roundScore += dice;
         currentPlayerScore.textContent = roundScore;
     } else {
-        endTurn(currentPlayerScore);
+        endTurn();
     }
 });
 
@@ -63,13 +64,14 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
     document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
     //3. check if player won the game else it is next player 
-    endTurn(currentPlayerScore);
+    endTurn();
 });
 
-function endTurn(currentPlayerScore){
+function endTurn(){
     roundScore = 0;
     currentPlayerScore.textContent = roundScore;
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+    currentPlayerScore = document.querySelector('#current-' + activePlayer);
 
     //next player
     document.querySelector('.player-0-panel').classList.toggle('active');
