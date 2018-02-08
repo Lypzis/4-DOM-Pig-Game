@@ -25,17 +25,9 @@ var scores,
     diceDOM,
     currentPlayerScore;
 
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
+newGame();
 
-document.getElementById('score-0').textContent = scores[0];
-document.getElementById('score-1').textContent = scores[1];
-document.getElementById('current-0').textContent = 0;
-document.getElementById('current-1').textContent = 0;
-
-diceDOM = document.querySelector('.dice');
-diceDOM.style.display = 'none';
+document.querySelector('.btn-new').addEventListener('click', newGame);
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
     //1. Random Number;
@@ -64,8 +56,27 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
     document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
     //3. check if player won the game else it is next player 
-    endTurn();
+    if (scores[activePlayer] >= 100){
+        alert('Player ' + (activePlayer + 1) + ' has won!');
+        newGame();
+    } else {
+        endTurn();
+    }
 });
+
+function newGame(){
+    scores = [0, 0];
+    roundScore = 0;
+    activePlayer = 0;
+
+    document.getElementById('score-0').textContent = scores[0];
+    document.getElementById('score-1').textContent = scores[1];
+    document.getElementById('current-0').textContent = 0;
+    document.getElementById('current-1').textContent = 0;
+
+    diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'none';
+}
 
 function endTurn(){
     roundScore = 0;
