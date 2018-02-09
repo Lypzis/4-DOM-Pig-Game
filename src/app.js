@@ -40,6 +40,7 @@ var scores,
     buttonNew,
     buttonQuit,
     buttonOptions;
+    //buttonSave
 
 ////////////////////////////////////////////////////////////////////////////
 // Begin the game
@@ -56,6 +57,16 @@ buttonOptions.addEventListener('click', (event) => {
 
     ipcRenderer.send('options');
 });
+
+/////////////////////////////////////////////////////////////////////////////
+// Button Save Event Listener
+/*buttonSave.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    alert('I submitted');
+
+    ipcRenderer.send('hahahahhah'); //for now !!!!
+}); */
 
 ////////////////////////////////////////////////////////////////////////////
 // Button Quit Event Listener
@@ -121,6 +132,7 @@ function newGame(){
     buttonNew = document.querySelector('.btn-new');
     buttonOptions = document.querySelector('.btn-options');
     buttonQuit = document.querySelector('.btn-quit');
+    /*buttonSave = document.querySelector('.btn-save'); */
 
     diceDOM.style.display = 'none';
 
