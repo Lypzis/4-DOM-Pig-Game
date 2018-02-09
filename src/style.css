@@ -46,6 +46,19 @@ body {
 }
 
 
+/**********************************************
+*** Options
+**********************************************/
+.options-score { /* problem */
+    position: absolute;
+    padding-left: 70px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.btn-save { bottom: 95%;}
+
+
 
 /**********************************************
 *** PLAYERS
@@ -138,6 +151,7 @@ i {
 }
 
 .btn-new { top: 45px;}
+.btn-options { top: 95px;}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 .btn-quit { top: 545px;}

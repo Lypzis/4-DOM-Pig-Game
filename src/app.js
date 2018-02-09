@@ -33,11 +33,13 @@ var scores,
     gamePlaying,
 
     diceDOM,
+    diceRow,
     
     buttonHold,
     buttonRoll,
     buttonNew,
-    buttonQuit;
+    buttonQuit,
+    buttonOptions;
 
 ////////////////////////////////////////////////////////////////////////////
 // Begin the game
@@ -46,6 +48,14 @@ newGame();
 /////////////////////////////////////////////////////////////////////////////
 // Button New Event Listener
 buttonNew.addEventListener('click', newGame);
+
+/////////////////////////////////////////////////////////////////////////////
+// Button Options Event Listener
+buttonOptions.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    ipcRenderer.send('options');
+});
 
 ////////////////////////////////////////////////////////////////////////////
 // Button Quit Event Listener
@@ -65,13 +75,14 @@ buttonRoll.addEventListener('click', function(){
         diceDOM.src = 'img/dice-' + dice + '.png';
 
         currentPlayerScore = document.querySelector('#current-' + activePlayer);
-        if (dice !== 1){
+        if (dice === 1 || diceRow === 6 && diceRow === dice){
+            endTurn();
+        } else {
             //add score
             roundScore += dice;
-            currentPlayerScore.textContent = roundScore;
-        } else {
-            endTurn();
-        }
+            currentPlayerScore.textContent = roundScore;    
+            diceRow = dice;  
+        }    
     }
 });
 
@@ -101,12 +112,14 @@ function newGame(){
     scores = [0, 0];
     roundScore = 0;
     activePlayer = 0;
+    diceRow = 0;
     gamePlaying = true;
 
     diceDOM = document.querySelector('.dice');
     buttonRoll = document.querySelector('.btn-roll');
     buttonHold = document.querySelector('.btn-hold');
     buttonNew = document.querySelector('.btn-new');
+    buttonOptions = document.querySelector('.btn-options');
     buttonQuit = document.querySelector('.btn-quit');
 
     diceDOM.style.display = 'none';

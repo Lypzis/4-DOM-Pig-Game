@@ -2,6 +2,7 @@ const electron = require('electron');
 const { app, BrowserWindow, ipcMain } = electron;
 
 let mainWindow;
+let optionsWindow;
 
 app.on('ready', ()=>{
     mainWindow = new BrowserWindow({
@@ -15,4 +16,15 @@ app.on('ready', ()=>{
 
 ipcMain.on('quit', () => {
     app.quit();
+});
+
+ipcMain.on('options', () => {
+    optionsWindow = new BrowserWindow({
+        width: 300,
+        height: 150,
+        resizable: false,
+    });
+    optionsWindow.loadURL(`file://${__dirname}/pages/options.html`);
+
+    optionsWindow.on('closed', () => optionsWindow = null );
 });
