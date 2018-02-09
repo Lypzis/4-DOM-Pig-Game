@@ -20,6 +20,11 @@ GAME RULES:
 /////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
+// Import of Electron
+const electron = require('electron');
+const { ipcRenderer } = electron;
+
+////////////////////////////////////////////////////////////////////////////
 // Variables
 var scores,
     roundScore,
@@ -31,7 +36,8 @@ var scores,
     
     buttonHold,
     buttonRoll,
-    buttonNew;
+    buttonNew,
+    buttonQuit;
 
 ////////////////////////////////////////////////////////////////////////////
 // Begin the game
@@ -40,6 +46,14 @@ newGame();
 /////////////////////////////////////////////////////////////////////////////
 // Button New Event Listener
 buttonNew.addEventListener('click', newGame);
+
+////////////////////////////////////////////////////////////////////////////
+// Button Quit Event Listener
+buttonQuit.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    ipcRenderer.send('quit');
+});
 
 /////////////////////////////////////////////////////////////////////////////
 // Button Roll Event Listener
@@ -93,6 +107,7 @@ function newGame(){
     buttonRoll = document.querySelector('.btn-roll');
     buttonHold = document.querySelector('.btn-hold');
     buttonNew = document.querySelector('.btn-new');
+    buttonQuit = document.querySelector('.btn-quit');
 
     diceDOM.style.display = 'none';
 
@@ -121,3 +136,4 @@ function endTurn(){
 
     diceDOM.style.display = 'none';
 }
+

@@ -1,5 +1,5 @@
 const electron = require('electron');
-const { app, BrowserWindow } = electron;
+const { app, BrowserWindow, ipcMain } = electron;
 
 let mainWindow;
 
@@ -7,11 +7,12 @@ app.on('ready', ()=>{
     mainWindow = new BrowserWindow({
         width: 1100, 
         height: 650,
-        resizable: false
+        resizable: false,
+        frame: false
     });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
+});
 
-    mainWindow.on('close', () => app.quit );
-
-    mainWindow.on('closed', () => {mainWindow = null});
+ipcMain.on('quit', () => {
+    app.quit();
 });
