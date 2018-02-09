@@ -48,7 +48,7 @@ buttonRoll.addEventListener('click', function(){
         var dice = Math.floor((Math.random() * 6)+1);
 
         diceDOM.style.display = 'block';
-        diceDOM.src = 'dice-' + dice + '.png';
+        diceDOM.src = 'img/dice-' + dice + '.png';
 
         currentPlayerScore = document.querySelector('#current-' + activePlayer);
         if (dice !== 1){

@@ -11,5 +11,7 @@ app.on('ready', ()=>{
     });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
+    mainWindow.on('close', () => app.quit );
+
     mainWindow.on('closed', () => {mainWindow = null});
 });
