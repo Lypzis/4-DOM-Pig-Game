@@ -11,7 +11,7 @@ app.on('ready', ()=>{
         width: 1100, 
         height: 650,
         resizable: false,
-        //frame: false,
+        frame: false,
         show: false
     });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
