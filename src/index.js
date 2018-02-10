@@ -4,12 +4,14 @@ const { app, BrowserWindow, ipcMain } = electron;
 let mainWindow;
 let optionsWindow;
 
+////////////////////////////////////////////////////////////////////////////////////
+// Main Window
 app.on('ready', ()=>{
     mainWindow = new BrowserWindow({
         width: 1100, 
         height: 650,
         resizable: false,
-        frame: false,
+        //frame: false,
         show: false
     });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
@@ -23,23 +25,24 @@ ipcMain.on('quit', () => {
     app.quit();
 });
 
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Options Window
+ipcMain.on('saveOptions', (event, inputValue) => {
+    mainWindow.webContents.send('setOptions', inputValue);
+
+    optionsWindow.close();
+});
+
 ipcMain.on('options', () => {
     openOptionsWindow();
 });
-
-/*ipcMain.on('hahahahhah', () => {
-    //Herere
-
-    console.log('Checked!!!');
-
-    optionsWindow.close();
-});*/
 
 function openOptionsWindow(){
     optionsWindow = new BrowserWindow({
         width: 300,
         height: 150,
-        resizable: false,
+        //resizable: false,
         show: false,
         parent: mainWindow,
         modal: true,

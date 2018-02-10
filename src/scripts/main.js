@@ -31,6 +31,7 @@ var scores,
     activePlayer,
     currentPlayerScore,
     gamePlaying,
+    maxScore,
 
     diceDOM,
     diceRow,
@@ -40,7 +41,6 @@ var scores,
     buttonNew,
     buttonQuit,
     buttonOptions;
-    //buttonSave
 
 ////////////////////////////////////////////////////////////////////////////
 // Begin the game
@@ -58,15 +58,9 @@ buttonOptions.addEventListener('click', (event) => {
     ipcRenderer.send('options');
 });
 
-/////////////////////////////////////////////////////////////////////////////
-// Button Save Event Listener
-/*buttonSave.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    alert('I submitted');
-
-    ipcRenderer.send('hahahahhah'); //for now !!!!
-}); */
+ipcRenderer.on('setOptions', function(event, scoreValue){
+        maxScore = scoreValue;
+});
 
 ////////////////////////////////////////////////////////////////////////////
 // Button Quit Event Listener
@@ -105,7 +99,7 @@ buttonHold.addEventListener('click', function(){
 
         document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
-        if (scores[activePlayer] >= 100){
+        if (scores[activePlayer] >= maxScore){
             document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
             diceDOM.style.display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -124,6 +118,7 @@ function newGame(){
     roundScore = 0;
     activePlayer = 0;
     diceRow = 0;
+    maxScore = 100;
     gamePlaying = true;
 
     diceDOM = document.querySelector('.dice');
@@ -132,7 +127,6 @@ function newGame(){
     buttonNew = document.querySelector('.btn-new');
     buttonOptions = document.querySelector('.btn-options');
     buttonQuit = document.querySelector('.btn-quit');
-    /*buttonSave = document.querySelector('.btn-save'); */
 
     diceDOM.style.display = 'none';
 
