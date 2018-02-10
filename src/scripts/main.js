@@ -34,6 +34,7 @@ var scores,
     maxScore,
 
     diceDOM,
+    diceDOM2,
     diceRow,
     
     buttonHold,
@@ -77,18 +78,22 @@ buttonQuit.addEventListener('click', (event) => {
 buttonRoll.addEventListener('click', function(){
     if(gamePlaying) {
         var dice = Math.floor((Math.random() * 6)+1);
+        var dice2 = Math.floor((Math.random() * 6)+1);
+        var total = dice + dice2;
 
         diceDOM.style.display = 'block';
+        diceDOM2.style.display = 'block';
         diceDOM.src = 'img/dice-' + dice + '.png';
+        diceDOM2.src = 'img/dice-' + dice2 + '.png';
 
         currentPlayerScore = document.querySelector('#current-' + activePlayer);
-        if (dice === 1 || diceRow === 6 && diceRow === dice){
+        if (dice === 1 || dice2 === 1 || diceRow === 6 && diceRow === total){
             endTurn();
         } else {
             //add score
-            roundScore += dice;
+            roundScore += total;
             currentPlayerScore.textContent = roundScore;    
-            diceRow = dice;  
+            diceRow = total;
         }    
     }
 });
@@ -104,6 +109,7 @@ buttonHold.addEventListener('click', function(){
         if (scores[activePlayer] >= maxScore){
             document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
             diceDOM.style.display = 'none';
+            diceDOM2.style.display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
             gamePlaying = false;
@@ -124,6 +130,7 @@ function newGame(){
     gamePlaying = true;
 
     diceDOM = document.querySelector('.dice');
+    diceDOM2 = document.querySelector('.secondDice');
     buttonRoll = document.querySelector('.btn-roll');
     buttonHold = document.querySelector('.btn-hold');
     buttonNew = document.querySelector('.btn-new');
@@ -131,6 +138,7 @@ function newGame(){
     buttonQuit = document.querySelector('.btn-quit');
 
     diceDOM.style.display = 'none';
+    diceDOM2.style.display = 'none';
 
     for (var i = 0; i < 2; ++i){
         document.getElementById('score-'+i).textContent = scores[i];
@@ -157,5 +165,7 @@ function endTurn(){
     document.querySelector('.player-1-panel').classList.toggle('active');  
 
     diceDOM.style.display = 'none';
+    diceDOM2.style.display = 'none';
+
 }
 
