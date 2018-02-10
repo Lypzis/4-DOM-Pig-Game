@@ -41,12 +41,12 @@ ipcMain.on('options', () => {
 function openOptionsWindow(){
     optionsWindow = new BrowserWindow({
         width: 300,
-        height: 150,
-        //resizable: false,
+        height: 180,
+        resizable: false,
         show: false,
         parent: mainWindow,
         modal: true,
-        //frame: false,
+        frame: false,
     });
     optionsWindow.loadURL(`file://${__dirname}/pages/options.html`);
 

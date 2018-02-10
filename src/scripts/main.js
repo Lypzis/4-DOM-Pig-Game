@@ -53,9 +53,11 @@ buttonNew.addEventListener('click', newGame);
 /////////////////////////////////////////////////////////////////////////////
 // Button Options Event Listener
 buttonOptions.addEventListener('click', (event) => {
-    event.preventDefault();
+    if (gamePlaying){
+        event.preventDefault();
 
-    ipcRenderer.send('options');
+        ipcRenderer.send('options');
+    }
 });
 
 ipcRenderer.on('setOptions', function(event, scoreValue){
@@ -145,6 +147,7 @@ function newGame(){
 // End of the Turn
 function endTurn(){
     roundScore = 0;
+    diceRow = 0;
     currentPlayerScore.textContent = roundScore;
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
     currentPlayerScore = document.querySelector('#current-' + activePlayer);
