@@ -20,8 +20,9 @@ GAME RULES:
 /////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
-// Import of Electron
+// Imports
 const electron = require('electron');
+
 const { ipcRenderer } = electron;
 
 ////////////////////////////////////////////////////////////////////////////
@@ -36,12 +37,17 @@ var scores,
     diceDOM,
     diceDOM2,
     diceRow,
+    diceRollSound,
     
     buttonHold,
     buttonRoll,
     buttonNew,
     buttonQuit,
-    buttonOptions;
+    buttonOptions,
+    buttonSound,
+    
+    soundTrack,
+    sound;
 
 ////////////////////////////////////////////////////////////////////////////
 // Begin the game
@@ -65,6 +71,26 @@ ipcRenderer.on('setOptions', function(event, scoreValue){
         maxScore = scoreValue;
 });
 
+///////////////////////////////////////////////////////////////////////////
+// Button Sound Event Listener
+buttonSound.addEventListener('click', function(){
+    var sound = document.querySelector('#sound');
+
+    if (sound.classList.value === 'ion-ios-volume-high' ){
+        sound.classList.remove('ion-ios-volume-high');
+        sound.classList.add('ion-ios-volume-low');
+
+        sound = false;
+    }else{
+        sound.classList.remove('ion-ios-volume-low');
+        sound.classList.add('ion-ios-volume-high');
+
+        sound = true;
+    }
+
+    sound ? soundTrack.play() : soundTrack.pause();
+});
+
 ////////////////////////////////////////////////////////////////////////////
 // Button Quit Event Listener
 buttonQuit.addEventListener('click', (event) => {
@@ -83,9 +109,14 @@ buttonRoll.addEventListener('click', function(){
 
         diceDOM.style.display = 'block';
         diceDOM2.style.display = 'block';
+
+        if ( document.querySelector('#sound').classList.value === 'ion-ios-volume-high' ){
+            diceRollSound.play();
+        }
+         
         diceDOM.src = 'img/dice-' + dice + '.png';
         diceDOM2.src = 'img/dice-' + dice2 + '.png';
-
+ 
         currentPlayerScore = document.querySelector('#current-' + activePlayer);
         if (dice === 1 || dice2 === 1 || diceRow === 6 && diceRow === total){
             endTurn();
@@ -94,7 +125,8 @@ buttonRoll.addEventListener('click', function(){
             roundScore += total;
             currentPlayerScore.textContent = roundScore;    
             diceRow = total;
-        }    
+        }  
+        
     }
 });
 
@@ -127,13 +159,18 @@ function newGame(){
     activePlayer = 0;
     diceRow = 0;
     maxScore = 100;
-    gamePlaying = true;
-
+    gamePlaying = true,
+    sound = true;
+    
     diceDOM = document.querySelector('.dice');
     diceDOM2 = document.querySelector('.secondDice');
+    diceRollSound = document.querySelector('#diceSound');
+    soundTrack = document.querySelector('#soundTrack');
+
     buttonRoll = document.querySelector('.btn-roll');
     buttonHold = document.querySelector('.btn-hold');
     buttonNew = document.querySelector('.btn-new');
+    buttonSound = document.querySelector('.btn-sound');
     buttonOptions = document.querySelector('.btn-options');
     buttonQuit = document.querySelector('.btn-quit');
 

@@ -12,7 +12,9 @@ app.on('ready', ()=>{
         height: 650,
         resizable: false,
         frame: false,
-        show: false
+        show: false,
+        fullscreen: true,
+        icon: __dirname + '/img/icon2.png'
     });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
