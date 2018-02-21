@@ -1,7 +1,7 @@
 # Pig-Game
 A dice game !
 
-
+------------------------------------------------------------------
 Dev dependencies:
 
 npm install -g electron-forge
